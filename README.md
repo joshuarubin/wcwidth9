@@ -2,6 +2,8 @@
 
 platform independent, header only, wcwidth with full unicode 9 support
 
+This code is primarily derived from the [neovim](https://github.com/neovim/neovim) project. The tables were produced from parsing the official unicode files [EastAsianWidth.txt](http://www.unicode.org/Public/9.0.0/ucd/EastAsianWidth.txt) and [emoji-data.txt](http://unicode.org/Public/emoji/3.0/emoji-data.txt) using [genunicodetables.lua](https://github.com/neovim/neovim/blob/master/scripts/genunicodetables.lua).
+
 Simply include `wcwidth9.h` in your project and use the `wcwidth9` function.
 It works just like `wcwidth`.
 
