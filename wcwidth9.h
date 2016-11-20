@@ -8,6 +8,12 @@ struct wcwidth9_interval {
   long last;
 };
 
+static const struct wcwidth9_interval wcwidth9_private[] = {
+  {0x00e000, 0x00f8ff},
+  {0x0f0000, 0x0ffffd},
+  {0x100000, 0x10fffd},
+};
+
 static const struct wcwidth9_interval wcwidth9_nonprint[] = {
   {0x0000, 0x001f},
   {0x007f, 0x009f},
@@ -1275,21 +1281,25 @@ static inline bool wcwidth9_intable(const struct wcwidth9_interval *table, size_
   return false;
 }
 
-static inline int wcwidth9(int c, int ambi) {
+static inline int wcwidth9(int c) {
   if (wcwidth9_intable(wcwidth9_nonprint, WCWIDTH9_ARRAY_SIZE(wcwidth9_nonprint), c)) {
-    return 0;
+    return -1;
   }
 
   if (wcwidth9_intable(wcwidth9_combining, WCWIDTH9_ARRAY_SIZE(wcwidth9_combining), c)) {
-    return 0;
+    return -1;
   }
 
   if (wcwidth9_intable(wcwidth9_not_assigned, WCWIDTH9_ARRAY_SIZE(wcwidth9_not_assigned), c)) {
-    return 0;
+    return -1;
+  }
+
+  if (wcwidth9_intable(wcwidth9_private, WCWIDTH9_ARRAY_SIZE(wcwidth9_private), c)) {
+    return -3;
   }
 
   if (wcwidth9_intable(wcwidth9_ambiguous, WCWIDTH9_ARRAY_SIZE(wcwidth9_ambiguous), c)) {
-    return ambi;
+    return -2;
   }
 
   if (wcwidth9_intable(wcwidth9_doublewidth, WCWIDTH9_ARRAY_SIZE(wcwidth9_doublewidth), c)) {
