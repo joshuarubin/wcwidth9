@@ -2,6 +2,7 @@
 #define WCWIDTH9_H
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct wcwidth9_interval {
   long first;
