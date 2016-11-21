@@ -1283,7 +1283,7 @@ static inline bool wcwidth9_intable(const struct wcwidth9_interval *table, size_
 }
 
 static inline int wcwidth9(int c) {
-  if (c < 0|| c > 0x10ffff) {
+  if (c < 0 || c > 0x10ffff) {
     return -1;
   }
 
