@@ -6,11 +6,6 @@
 #include "../wcwidth9.h"
 
 int main(int argc, char **argv) {
-	if (argc != 2) {
-		fprintf(stderr, "argument required\n");
-		return 1;
-	}
-
   for (utf8proc_int32_t c = 0; c < 0x110000; c++) {
     if (wcwidth9_intable(wcwidth9_ambiguous, WCWIDTH9_ARRAY_SIZE(wcwidth9_ambiguous), c)) {
       // skip all known ambiguous
@@ -46,6 +41,10 @@ int main(int argc, char **argv) {
     if (w != u) {
       printf("d: '%s' c: 0x%06x, wcwidth9: %d, utf8proc: %d, category: %s\n", cstr, c, w, u, utf8proc_category_string(c));
     }
+  }
+
+  if (argc < 2) {
+    return 0;
   }
 
 	char *str = argv[1];
