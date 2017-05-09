@@ -35,8 +35,8 @@ int main(int argc, char **argv) {
       continue;
     }
 
-		utf8proc_uint8_t cstr[4] = {0, 0, 0, 0};
-		utf8proc_encode_char(c, cstr);
+    utf8proc_uint8_t cstr[4] = {0, 0, 0, 0};
+    utf8proc_encode_char(c, cstr);
 
     if (w != u) {
       printf("d: '%s' c: 0x%06x, wcwidth9: %d, utf8proc: %d, category: %s\n", cstr, c, w, u, utf8proc_category_string(c));
@@ -47,24 +47,24 @@ int main(int argc, char **argv) {
     return 0;
   }
 
-	char *str = argv[1];
-	size_t len = strlen(str);
-	while (str < argv[1]+len) {
-		utf8proc_int32_t rune;
-		const utf8proc_ssize_t size = utf8proc_iterate((utf8proc_uint8_t*)str, (utf8proc_ssize_t)strlen(str), &rune);
-		const int uwidth = utf8proc_charwidth(rune);
+  char *str = argv[1];
+  size_t len = strlen(str);
+  while (str < argv[1]+len) {
+    utf8proc_int32_t rune;
+    const utf8proc_ssize_t size = utf8proc_iterate((utf8proc_uint8_t*)str, (utf8proc_ssize_t)strlen(str), &rune);
+    const int uwidth = utf8proc_charwidth(rune);
     const int width = wcwidth9(rune);
 
-		utf8proc_uint8_t cstr[4] = {0, 0, 0, 0};
-		// const utf8proc_ssize_t written = utf8proc_encode_char(rune, cstr);
-		utf8proc_encode_char(rune, cstr);
-		printf("rune '%s', wcwidth9: %d, utf8proc: %d, wcwidth: %2d, category: %s, hex: 0x%x\n",
+    utf8proc_uint8_t cstr[4] = {0, 0, 0, 0};
+    // const utf8proc_ssize_t written = utf8proc_encode_char(rune, cstr);
+    utf8proc_encode_char(rune, cstr);
+    printf("rune '%s', wcwidth9: %d, utf8proc: %d, wcwidth: %2d, category: %s, hex: 0x%x\n",
         cstr,
         width,
         uwidth,
         wcwidth(rune),
         utf8proc_category_string(rune),
         rune);
-		str += size;
-	}
+    str += size;
+  }
 }
